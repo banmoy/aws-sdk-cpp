@@ -2,6 +2,8 @@
 
 本文档基于 StarRocks 源码（分支 `cursor/slack-claude-cf4a`），分析 StarRocks 如何使用 AWS C++ SDK 和 Java SDK，以及在哪些场景下会触发 IMDSv1 / IMDSv2 调用。
 
+> **来源说明**：本文档中关于 Broker Load 调用链、根因分析（`m_tokenRequired` 永久回退）、tcpdump 证据和解决方案等核心结论，主要来源于 StarRocks 仓库中已有的 `docs/analysis-broker-load-imdsv1-issue.md`。本文在此基础上做了源码验证，并补充了以下内容：旧路径（`FSOptions`/`THdfsProperties`）的 S3 客户端创建、Iceberg 客户端工厂触发点、编译参数 `DISABLE_INTERNAL_IMDSV1_CALLS` 的验证、`Aws::SDKOptions` 初始化分析等。
+
 ---
 
 ## 一、整体架构
